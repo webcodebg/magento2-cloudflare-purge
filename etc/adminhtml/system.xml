@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author       Kostadin Bashev (bashev@webcode.bg)
+ * @copyright Copyright © 2026 Webcode (https://webcode.bg/)
+ * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <!-- Native tab, per the tree convention: Advanced → System, next to Full Page Cache,
+             whose Varnish purges this module follows. Not a group INSIDE full_page_cache: that
+             group is default-scope only, and a Cloudflare zone belongs to a website. -->
+        <section id="system">
+            <group id="cloudflare_purge" translate="label comment" type="text" sortOrder="610"
+                   showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Cloudflare Edge Cache Purge</label>
+                <comment>Purges the anonymous HTML that Cloudflare keeps at the edge whenever Magento purges Varnish. Needs Varnish to send the Cache-Tag header (copy X-Magento-Tags into Cache-Tag in the VCL). Set per website: one Cloudflare zone each.</comment>
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Cloudflare Purge</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="zone_id" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Zone ID</label>
+                    <comment>Cloudflare dashboard → the domain → Overview → API → Zone ID.</comment>
+                    <validate>validate-alphanum</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_token" translate="label comment" type="obscure" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Token</label>
+                    <comment>A token with Zone → Cache Purge → Purge for this zone only.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

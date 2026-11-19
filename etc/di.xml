@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author       Kostadin Bashev (bashev@webcode.bg)
+ * @copyright Copyright © 2026 Webcode (https://webcode.bg/)
+ * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Global, not adminhtml/crontab: purges come from the admin, from cron (sync, reindex)
+         and from the CLI (cache:flush) alike. -->
+    <type name="Magento\CacheInvalidate\Model\PurgeCache">
+        <plugin name="webcode_cloudflare_purge_enqueue"
+                type="Webcode\CloudflarePurge\Plugin\Magento\CacheInvalidate\Model\PurgeCache"/>
+    </type>
+
+    <virtualType name="Webcode\CloudflarePurge\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/cloudflare_purge.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Webcode\CloudflarePurge\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">cloudflare_purge</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="file" xsi:type="object">Webcode\CloudflarePurge\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Webcode\CloudflarePurge\Plugin\Magento\CacheInvalidate\Model\PurgeCache">
+        <arguments>
+            <argument name="logger" xsi:type="object">Webcode\CloudflarePurge\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Webcode\CloudflarePurge\Model\Purger">
+        <arguments>
+            <argument name="logger" xsi:type="object">Webcode\CloudflarePurge\Logger</argument>
+        </arguments>
+    </type>
+</config>

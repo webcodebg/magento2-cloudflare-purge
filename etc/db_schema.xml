@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author       Kostadin Bashev (bashev@webcode.bg)
+ * @copyright Copyright © 2026 Webcode (https://webcode.bg/)
+ * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Tags waiting to be purged at Cloudflare. UNIQUE(tag) is the deduplication: a burst
+         that bans the same product 50 times costs one row. queue_id gives the cron a stable
+         boundary, so rows queued while a run is talking to Cloudflare survive its delete. -->
+    <table name="webcode_cloudflare_purge_queue" resource="default" engine="innodb"
+           comment="Cloudflare purge queue">
+        <column xsi:type="int" name="queue_id" unsigned="true" nullable="false" identity="true"
+                comment="Queue ID"/>
+        <column xsi:type="varchar" name="tag" nullable="false" length="255" comment="Cache tag"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="queue_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="WEBCODE_CLOUDFLARE_PURGE_QUEUE_TAG">
+            <column name="tag"/>
+        </constraint>
+    </table>
+</schema>

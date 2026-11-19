@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author       Kostadin Bashev (bashev@webcode.bg)
+ * @copyright Copyright © 2026 Webcode (https://webcode.bg/)
+ * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <system>
+            <cloudflare_purge>
+                <enabled>0</enabled>
+                <api_token backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+            </cloudflare_purge>
+        </system>
+    </default>
+</config>

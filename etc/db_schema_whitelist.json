@@ -1,0 +1,12 @@
+{
+    "webcode_cloudflare_purge_queue": {
+        "column": {
+            "queue_id": true,
+            "tag": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "WEBCODE_CLOUDFLARE_PURGE_QUEUE_TAG": true
+        }
+    }
+}

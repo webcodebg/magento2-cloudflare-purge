@@ -1,0 +1,31 @@
+{
+    "name": "webcode/module-cloudflare-purge",
+    "version": "1.1.1",
+    "description": "Purges Cloudflare's edge cache of the anonymous HTML shell whenever Magento purges Varnish: every PURGE tag is queued and a per-minute cron sends them to the Cloudflare purge-by-tag API within the Free-plan rate limit, falling back to a hostname purge on flush-all or a backlog.",
+    "type": "magento2-module",
+    "license": ["OSL-3.0", "AFL-3.0"],
+    "authors": [
+        {
+            "name": "Kostadin Bashev",
+            "email": "bashev@webcode.bg",
+            "homepage": "https://webcode.bg/",
+            "role": "Head Magento Developer"
+        }
+    ],
+    "require": {
+        "php": "~8.1.0||~8.2.0||~8.3.0||~8.4.0||~8.5.0",
+        "magento/framework": "*",
+        "magento/module-cache-invalidate": "*",
+        "magento/module-config": "*",
+        "magento/module-cron": "*",
+        "magento/module-store": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Webcode\\CloudflarePurge\\": ""
+        }
+    }
+}
