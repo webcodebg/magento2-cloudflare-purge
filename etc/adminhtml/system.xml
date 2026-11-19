@@ -16,6 +16,7 @@
             <group id="cloudflare_purge" translate="label comment" type="text" sortOrder="610"
                    showInDefault="1" showInWebsite="1" showInStore="0">
                 <label>Cloudflare Edge Cache Purge</label>
+                <fieldset_css>webcode-section-config</fieldset_css>
                 <comment>Purges the anonymous HTML that Cloudflare keeps at the edge whenever Magento purges Varnish. Needs Varnish to send the Cache-Tag header (copy X-Magento-Tags into Cache-Tag in the VCL). Set per website: one Cloudflare zone each.</comment>
                 <field id="enabled" translate="label" type="select" sortOrder="10"
                        showInDefault="1" showInWebsite="1" showInStore="0">
